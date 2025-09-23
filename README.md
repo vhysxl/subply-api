@@ -15,6 +15,8 @@ Built with NestJS, Drizzle ORM, and PostgreSQL, and integrated with Midtrans for
 
 This project is designed with clean architecture and follows a controller → service → repository pattern.
 
+LIVE: [https://appetize.io/embed/b_6dziaupbs722unavog2gtbm6je]
+
 ## 🔧 Tech Stack
 
 - **Framework**: NestJS
