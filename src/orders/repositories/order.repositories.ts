@@ -234,7 +234,6 @@ export class OrderRepository {
           .from(schemas.orderProductsTable)
           .where(eq(schemas.orderProductsTable.orderId, orderId));
 
-        //map jadi array
         const productIds = products.map((v) => v.productId);
 
         if (productIds.length > 0 && type === 'voucher') {
