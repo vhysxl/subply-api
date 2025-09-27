@@ -90,7 +90,7 @@ jobs:
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             MIDTRANS_SERVER_KEY=${{ secrets.MIDTRANS_SERVER_KEY }}
 
-      - name: 'Check response code' # cek apakah deploy berhasil
+      - name: 'Check response code'
         if: steps.check.outputs.deploy == 'true' 
         run: |
           curl -s -o /dev/null -w "%{http_code}" "${{ steps.deploy.outputs.url }}"
