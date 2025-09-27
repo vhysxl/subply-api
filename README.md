@@ -15,21 +15,23 @@ Built with NestJS, Drizzle ORM, and PostgreSQL, and integrated with Midtrans for
 
 This project is designed with clean architecture and follows a controller → service → repository pattern.
 
+LIVE: [https://appetize.io/embed/b_6dziaupbs722unavog2gtbm6je]
+
 ## 🔧 Tech Stack
 
-- **Framework**: NestJS  
-- **ORM**: Drizzle ORM  
-- **Database**: PostgreSQL (via NeonDB)  
-- **Containerization**: Docker  
-- **Payment Gateway**: Midtrans  
-- **Deployment**: Google Cloud Run  
-- **Media Storage**: Cloudinary  
-- **CI/CD**: GitHub Actions  
+- **Framework**: NestJS
+- **ORM**: Drizzle ORM
+- **Database**: PostgreSQL (via NeonDB)
+- **Containerization**: Docker
+- **Payment Gateway**: Midtrans
+- **Deployment**: Google Cloud Run
+- **Media Storage**: Cloudinary
+- **CI/CD**: GitHub Actions
 - **Container Registry**: GHCR & GAR (Google Artifact Registry)
-
 
 ## 🔐 Features
 
+- Middlewares (apiMiddlewares, Midtrans)
 - Role-based Authentication (User, Admin, Superadmin)
 - Midtrans Payment Integration
 - Audit Logging System
@@ -39,6 +41,7 @@ This project is designed with clean architecture and follows a controller → se
 - E-commerce flow (without cart system)
 
 ## 📁 Project Structure (src/)
+
 ```
 src/
 ├── auth/                     # Auth logic (JWT, Guards)
@@ -57,6 +60,7 @@ src/
 ```
 
 ## ⚠️ Environment Variables Required
+
 This API will not run without a valid .env file.
 Please create a .env file in the project root with the following variables:
 
@@ -77,18 +81,22 @@ CLOUDINARY_CLOUD_NAME="your_cloud_name"
 ```
 
 ## 🐳 Run with Docker
+
 Option 1: Using Docker Compose
+
 ```
 $ docker compose up
 ```
+
 Ensure your .env file is properly configured before running.
 
 Option 2: Pull from GitHub Container Registry
+
 ```
 $ docker pull ghcr.io/vhysxl/subply-api:latest
 ```
-Replace any necessary port or environment settings based on your environment.
 
+Replace any necessary port or environment settings based on your environment.
 
 ## 🚀 Project setup
 
@@ -108,6 +116,15 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## API Docs
+
+Swagger UI: https://subply-deploy-591941627936.asia-southeast2.run.app/api
+
+## TODO
+
+- Expand test coverage to all core services (currently partial)
+- Swagger docs
 
 ## License
 

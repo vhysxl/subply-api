@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      packages: write   #izin yang dibutuhkan
+      packages: write #izin yang dibutuhkan
 
     steps:
       - uses: actions/checkout@v4 #tool untuk clone current repo
@@ -43,12 +43,13 @@ jobs:
 
       - uses: 'google-github-actions/auth@v2' # tool untuk autentikasi ke gcp
         with: # gunakan workload identity ama service account
-          workload_identity_provider: 'projects/591941627936/locations/global/workloadIdentityPools/github-actions-subply/providers/github-actions' 
+          workload_identity_provider: 'projects/591941627936/locations/global/workloadIdentityPools/github-actions-subply/providers/github-actions'
           service_account: 'github-actions-subply@modified-fabric-379312.iam.gserviceaccount.com'
 
-      - name: "check if deployment needed" # cek apakah ada perubahan di src
+      - name: 'check if deployment needed' # cek apakah ada perubahan di src
         id: check # set id ini penting
-        run: | # cek apakah ada perubahan di src dengan git diff yang untuk HEAD~1 (commit sebelumnya), quiet untuk tidak menampilkan output
+        run:
+          | # cek apakah ada perubahan di src dengan git diff yang untuk HEAD~1 (commit sebelumnya), quiet untuk tidak menampilkan output
           if git diff --quiet HEAD~1 -- src/; then 
             echo "deploy=false" >> $GITHUB_OUTPUT
           else
@@ -59,23 +60,23 @@ jobs:
         if: steps.check.outputs.deploy == 'true'
         uses: 'google-github-actions/setup-gcloud@v2' # tool untuk setup gcloud cli
 
-      - name: "Use gcloud CLI"
+      - name: 'Use gcloud CLI'
         if: steps.check.outputs.deploy == 'true'
-        run: "gcloud info"
+        run: 'gcloud info'
 
-      - name: "Docker auth"
-        if: steps.check.outputs.deploy == 'true' 
+      - name: 'Docker auth'
+        if: steps.check.outputs.deploy == 'true'
         run: | # autentikasi docker ke gcr
           gcloud auth configure-docker asia-southeast2-docker.pkg.dev --quiet
 
-      - name: "push to gar" # push image ke google artifact registry (gar)
-        if: steps.check.outputs.deploy == 'true' 
+      - name: 'push to gar' # push image ke google artifact registry (gar)
+        if: steps.check.outputs.deploy == 'true'
         run: | #tambah tag ke image dan push ke gar
           docker tag ghcr.io/${{github.actor}}/subply-api:latest asia-southeast2-docker.pkg.dev/modified-fabric-379312/subply/subply-api:latest
-          docker push asia-southeast2-docker.pkg.dev/modified-fabric-379312/subply/subply-api:latest 
+          docker push asia-southeast2-docker.pkg.dev/modified-fabric-379312/subply/subply-api:latest
 
       - id: 'deploy' # deploy ke cloud run kalau ada perubahan di src
-        if: steps.check.outputs.deploy == 'true' 
+        if: steps.check.outputs.deploy == 'true'
         uses: 'google-github-actions/deploy-cloudrun@v2' # tool untuk deploy ke cloud run
         with:
           service: 'subply-deploy' # nama service cloud run
@@ -89,8 +90,14 @@ jobs:
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             MIDTRANS_SERVER_KEY=${{ secrets.MIDTRANS_SERVER_KEY }}
+            API_KEY=${{ secrets.API_KEY }}
 
+<<<<<<< HEAD
       - name: 'Check response code'
         if: steps.check.outputs.deploy == 'true' 
+=======
+      - name: 'Check response code' # cek apakah deploy berhasil
+        if: steps.check.outputs.deploy == 'true'
+>>>>>>> 29eb56358031142010ce94c65f298df7ad488bf6
         run: |
           curl -s -o /dev/null -w "%{http_code}" "${{ steps.deploy.outputs.url }}"
